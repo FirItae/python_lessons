@@ -1,0 +1,355 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import pandas as pd
+
+# Создаем данные для вопросов
+questions_data = [
+    {
+        'Question Text': 'Что такое переменная в Python?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'Функция для вывода данных',
+        'Option 2': 'Именованная область памяти для хранения данных',
+        'Option 3': 'Тип данных',
+        'Option 4': 'Оператор для вычислений',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Переменная - это именованная область памяти, которая хранит данные и может быть изменена в процессе выполнения программы.'
+    },
+    {
+        'Question Text': 'Что означает запись print(3)?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'Создание переменной с именем print',
+        'Option 2': 'Вызов функции print с аргументом 3',
+        'Option 3': 'Сложение числа 3 с функцией print',
+        'Option 4': 'Объявление функции print',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'print(3) означает вызов функции print с аргументом 3. Функция print() выводит переданные ей аргументы на экран.'
+    },
+    {
+        'Question Text': 'Что произойдет, если написать print() без аргументов?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'Программа выдаст ошибку',
+        'Option 2': 'Выведется пустая строка',
+        'Option 3': 'Выведется число 0',
+        'Option 4': 'Ничего не произойдет',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'print() без аргументов выводит пустую строку (перенос строки).'
+    },
+    {
+        'Question Text': 'Когда создается переменная в Python?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'Когда объявляется заранее',
+        'Option 2': 'Когда ей впервые присваивается значение',
+        'Option 3': 'В начале программы',
+        'Option 4': 'Когда вызывается функция',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'В Python переменные создаются автоматически при первом присваивании значения.'
+    },
+    {
+        'Question Text': 'Что выведет код: a = 5; print(a + 3)?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'a + 3',
+        'Option 2': '8',
+        'Option 3': '53',
+        'Option 4': 'Ошибку',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Переменная a заменяется на свое значение 5, поэтому 5 + 3 = 8.'
+    },
+    {
+        'Question Text': 'Что означает запись coins += 1?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'coins = 1',
+        'Option 2': 'coins = coins + 1',
+        'Option 3': 'coins = coins * 1',
+        'Option 4': 'coins = coins - 1',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Оператор += является сокращенной записью для coins = coins + 1.'
+    },
+    {
+        'Question Text': 'Какой тип данных у переменной a = 10.5?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'int',
+        'Option 2': 'float',
+        'Option 3': 'string',
+        'Option 4': 'bool',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Числа с десятичной точкой имеют тип float в Python.'
+    },
+    {
+        'Question Text': 'Что вернет функция type(3.14)?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'int',
+        'Option 2': 'float',
+        'Option 3': 'string',
+        'Option 4': 'number',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'type(3.14) вернет <class \'float\'> так как 3.14 - это число с плавающей точкой.'
+    },
+    {
+        'Question Text': 'Что выведет код: print 10 / 3?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': '3',
+        'Option 2': '3.3333333333333335',
+        'Option 3': '3.33',
+        'Option 4': 'Ошибку',
+        'Option 5': '',
+        'Correct Answer': '4',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'В Python 3 функция print() требует скобки. Без скобок будет синтаксическая ошибка.'
+    },
+    {
+        'Question Text': 'Как найти квадратный корень из 16?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': '16 ** 2',
+        'Option 2': '16 ** 0.5',
+        'Option 3': 'sqrt(16)',
+        'Option 4': '16 / 2',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Квадратный корень можно найти возведением в степень 0.5: 16 ** 0.5 = 4.0'
+    },
+    {
+        'Question Text': 'Что выведет код: 12 % 5?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': '2.4',
+        'Option 2': '2',
+        'Option 3': '7',
+        'Option 4': '60',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Оператор % возвращает остаток от деления. 12 % 5 = 2, так как 12 = 5*2 + 2.'
+    },
+    {
+        'Question Text': 'Что выведет код: \'Hello\' + \'World\'?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'Hello World',
+        'Option 2': 'HelloWorld',
+        'Option 3': 'Hello, World',
+        'Option 4': 'Ошибку',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Оператор + для строк соединяет их без пробелов: \'Hello\' + \'World\' = \'HelloWorld\'.'
+    },
+    {
+        'Question Text': 'Что выведет код: \'Python\' * 3?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'Python Python Python',
+        'Option 2': 'PythonPythonPython',
+        'Option 3': 'Python3',
+        'Option 4': 'Ошибку',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Оператор * для строк повторяет строку указанное количество раз без пробелов.'
+    },
+    {
+        'Question Text': 'Как получить первый символ строки text = \'Hello\'?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'text[1]',
+        'Option 2': 'text[0]',
+        'Option 3': 'text.first',
+        'Option 4': 'text[-1]',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'В Python индексы начинаются с 0, поэтому первый символ имеет индекс 0.'
+    },
+    {
+        'Question Text': 'Как получить последний символ строки text = \'Hello\'?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'text[4]',
+        'Option 2': 'text[-1]',
+        'Option 3': 'text.last',
+        'Option 4': 'text[5]',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'В Python можно использовать отрицательные индексы для доступа к элементам с конца строки. Индекс -1 соответствует последнему элементу, -2 - предпоследнему и так далее. Для строки "Hello" (длина 5) последний символ "o" имеет индекс 4 (положительный) или -1 (отрицательный).'
+    },
+    {
+        'Question Text': 'Что выведет код: len(\'Python\')?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': '5',
+        'Option 2': '6',
+        'Option 3': '7',
+        'Option 4': 'Ошибку',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Функция len() возвращает количество символов в строке. В \'Python\' 6 символов.'
+    },
+    {
+        'Question Text': 'Что всегда возвращает функция input()?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'Число',
+        'Option 2': 'Строку',
+        'Option 3': 'Список',
+        'Option 4': 'Случайное значение',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'input() всегда возвращает строку, даже если пользователь ввел число.'
+    },
+    {
+        'Question Text': 'Как правильно ввести число с клавиатуры?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'input(\'Введите число\')',
+        'Option 2': 'int(input(\'Введите число\'))',
+        'Option 3': 'number = input()',
+        'Option 4': 'input(int(\'Введите число\'))',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Нужно сначала получить строку через input(), а затем преобразовать её в число через int().'
+    },
+    {
+        'Question Text': 'Что выведет код: name = input(\'Имя: \'); print(f\'Привет, {name}!\') при вводе "Анна"?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'Привет, name!',
+        'Option 2': 'Привет, {name}!',
+        'Option 3': 'Привет, Анна!',
+        'Option 4': 'Ошибку',
+        'Option 5': '',
+        'Correct Answer': '3',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'В f-строках переменные в фигурных скобках заменяются на свои значения.'
+    },
+    {
+        'Question Text': 'Как правильно использовать f-строку?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'f\'Привет {name}\'',
+        'Option 2': '\'fПривет {name}\'',
+        'Option 3': '\'Привет {name}\'',
+        'Option 4': 'f\'Привет\' {name}',
+        'Option 5': '',
+        'Correct Answer': '1',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'F-строка должна начинаться с буквы f перед кавычками: f\'текст {переменная}\'.'
+    },
+    {
+        'Question Text': 'Что выведет код: age = 10; print(f\'Мне {age + 2} лет\')?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'Мне age + 2 лет',
+        'Option 2': 'Мне 10 + 2 лет',
+        'Option 3': 'Мне 12 лет',
+        'Option 4': 'Ошибку',
+        'Option 5': '',
+        'Correct Answer': '3',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'В f-строках можно выполнять вычисления внутри фигурных скобок: {age + 2} = {10 + 2} = 12.'
+    },
+    {
+        'Question Text': 'Как разделить аргументы в print() символом "+"?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'print(1, 2, 3, sep=\'+\')',
+        'Option 2': 'print(1, 2, 3, split=\'+\')',
+        'Option 3': 'print(1, 2, 3, join=\'+\')',
+        'Option 4': 'print(1, 2, 3, end=\'+\')',
+        'Option 5': '',
+        'Correct Answer': '1',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Параметр sep определяет разделитель между аргументами в print().'
+    },
+    {
+        'Question Text': 'Как убрать перенос строки в print()?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'print(\'text\', end=\'\')',
+        'Option 2': 'print(\'text\', sep=\'\')',
+        'Option 3': 'print(\'text\', newline=False)',
+        'Option 4': 'print(\'text\', break=False)',
+        'Option 5': '',
+        'Correct Answer': '1',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'Параметр end определяет, что выводится в конце. end=\'\' убирает перенос строки.'
+    },
+    {
+        'Question Text': 'Что выведет код: int(\'5\')?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': '\'5\'',
+        'Option 2': '5',
+        'Option 3': '5.0',
+        'Option 4': 'Ошибку',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'int() преобразует строку в целое число. int(\'5\') = 5.'
+    },
+    {
+        'Question Text': 'Что выведет код: float(3)?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': '3',
+        'Option 2': '3.0',
+        'Option 3': '\'3.0\'',
+        'Option 4': 'Ошибку',
+        'Option 5': '',
+        'Correct Answer': '2',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'float() преобразует число в число с плавающей точкой. float(3) = 3.0.'
+    },
+    {
+        'Question Text': 'Что произойдет при выполнении int(\'3.14\')?',
+        'Question Type': 'Multiple Choice',
+        'Option 1': 'Вернет 3',
+        'Option 2': 'Вернет 3.14',
+        'Option 3': 'Выдаст ошибку',
+        'Option 4': 'Вернет 3.0',
+        'Option 5': '',
+        'Correct Answer': '3',
+        'Time in seconds': '30',
+        'Image Link': '',
+        'Answer explanation': 'int() не может преобразовать строку с десятичной точкой в целое число. Нужно сначала использовать float().'
+    }
+]
+
+# Создаем DataFrame
+df = pd.DataFrame(questions_data)
+
+# Сохраняем в Excel файл
+df.to_excel('Quizizz_Урок1_Python_Вопросы.xlsx', index=False, engine='openpyxl')
+
+print('Файл Quizizz_Урок1_Python_Вопросы.xlsx создан успешно!')
+print(f'Создано {len(questions_data)} вопросов')
